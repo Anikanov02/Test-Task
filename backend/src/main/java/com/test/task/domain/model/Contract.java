@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
@@ -16,17 +17,27 @@ import java.time.LocalDate;
 @Builder
 public class Contract {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "contract_id")
     private Long id;
+
     @Column(name = "subscription_date")
     @Convert(converter = LocalDateConverter.class)
     private LocalDate subscriptionDate;
+
     @Column(name = "start_date")
     @Convert(converter = LocalDateConverter.class)
     private LocalDate startDate;
+
     @Column(name = "expiration_date")
     @Convert(converter = LocalDateConverter.class)
     private LocalDate expirationDate;
+
+    @Column(name = "sum_insured")
+    private BigDecimal sumInsured;
+
+    @Column(name = "contract_sum")
+    private BigDecimal contractSum;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private User user;
