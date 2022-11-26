@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?><databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet author="Sanya (generated)" id="1669424300944-1">
+<createTable tableName="Contract">
+<column autoIncrement="true" name="contract_id" type="BIGINT">
+<constraints nullable="false" primaryKey="true" primaryKeyName="ContractPK"/>
+</column>
+<column name="contract_sum" type="numeric(19, 2)"/>
+<column name="expiration_date" type="VARCHAR(255)"/>
+<column name="start_date" type="VARCHAR(255)"/>
+<column name="subscription_date" type="VARCHAR(255)"/>
+<column name="sum_insured" type="numeric(19, 2)"/>
+<column name="user_user_id" type="BIGINT"/>
+</createTable>
+</changeSet>
+<changeSet author="Sanya (generated)" id="1669424300944-2">
+<createTable tableName="User">
+<column autoIncrement="true" name="user_id" type="BIGINT">
+<constraints nullable="false" primaryKey="true" primaryKeyName="UserPK"/>
+</column>
+<column name="date_of_birth" type="VARCHAR(255)"/>
+<column name="fathers_name" type="VARCHAR(255)"/>
+<column name="first_name" type="VARCHAR(255)"/>
+<column name="last_name" type="VARCHAR(255)"/>
+<column name="phone_number" type="VARCHAR(255)"/>
+</createTable>
+</changeSet>
+<changeSet author="Sanya (generated)" id="1669424300944-3">
+<addForeignKeyConstraint baseColumnNames="user_user_id" baseTableName="Contract" constraintName="FKf7kfv8c7tfrdrg20g8vhhxgxd" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="user_id" referencedTableName="User" validate="true"/>
+</changeSet>
+</databaseChangeLog>
