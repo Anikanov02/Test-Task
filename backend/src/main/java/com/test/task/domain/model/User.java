@@ -30,6 +30,12 @@ public class User {
     @Column(name = "fathers_name")
     private String fathersName;
 
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "password")
+    private String password;
+
     @Column(name = "date_of_birth")
     @Convert(converter = LocalDateConverter.class)
     private LocalDate dateOfBirth;

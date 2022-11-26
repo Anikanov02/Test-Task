@@ -39,6 +39,9 @@ public class Contract {
     @Column(name = "contract_sum")
     private BigDecimal contractSum;
 
+    @Column(name = "is_archived")
+    private Boolean isArchived;
+
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private User user;
 }
