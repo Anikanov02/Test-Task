@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class ContractService {
     private final ContractRepository contractRepository;
 
-    public void createContract(ContractDto contractData) {
+    public Contract createContract(ContractDto contractData) {
         final Contract contract = Contract.builder()
                 .id(contractData.getId())
                 .subscriptionDate(contractData.getSubscriptionDate())
@@ -21,29 +21,29 @@ public class ContractService {
                 .contractSum(contractData.getContractSum())
                 .isArchived(contractData.getIsArchived())
                 .build();
-        contractRepository.save(contract);
+        return contractRepository.save(contract);
     }
 
     public Contract getContractById(long contractId) {
         return contractRepository.findById(contractId).orElseThrow(() -> new RuntimeException(String.format("No contract found with id %d", contractId)));
     }
 
-    public void updateContract(long contractId, ContractDto contractData) {
+    public Contract updateContract(long contractId, ContractDto contractData) {
         final Contract contract = getContractById(contractId);
-        contractRepository.save(contract);
+        return contractRepository.save(contract);
     }
 
     public void deleteContract(long contractId) {
         contractRepository.deleteById(contractId);
     }
 
-    public void archiveContract(long contractId) {
+    public Contract archiveContract(long contractId) {
         final Contract contract = getContractById(contractId);
         if (contract.getIsArchived()) {
             throw new RuntimeException(String.format("Contract with id %s is already archived", contractId));
         } else {
             contract.setIsArchived(false);
-            contractRepository.save(contract);
+            return contractRepository.save(contract);
         }
     }
 }

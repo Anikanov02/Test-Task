@@ -13,7 +13,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public void createUser(UserDto userData) {
+    public User createUser(UserDto userData) {
         final User user = User.builder()
                 .id(userData.getId())
                 .firstName(userData.getFirstName())
@@ -23,7 +23,7 @@ public class UserService {
                 .dateOfBirth(userData.getDateOfBirth())
                 .phoneNumber(userData.getPhoneNumber())
                 .build();
-        userRepository.save(user);
+        return userRepository.save(user);
     }
     public User getUserById(long userId) {
         return userRepository.findById(userId).orElseThrow(() -> new RuntimeException(String.format("No user found with id %d", userId)));
@@ -37,8 +37,8 @@ public class UserService {
         return userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException(String.format("No user found with email %s", email)));
     }
 
-    public void updateUser(long id, UserDto userData) {
-        User user = getUserById(id);
+    public User updateUser(long id, UserDto userData) {
+        final User user = getUserById(id);
 
         user.setFirstName(userData.getFirstName());
         user.setLastName(userData.getLastName());
@@ -50,7 +50,7 @@ public class UserService {
             user.setPassword(passwordEncoder.encode(userData.getPassword()));
         }
 
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 
     public void deleteUser(long userId) {

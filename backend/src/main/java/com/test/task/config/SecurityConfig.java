@@ -33,7 +33,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
                 .and().formLogin().disable()
                 .csrf().disable()
                 .httpBasic();
-        ;
     }
 
     @Autowired
