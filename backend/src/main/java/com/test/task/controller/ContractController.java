@@ -1,8 +1,8 @@
 package com.test.task.controller;
 
 import com.test.task.domain.dto.ContractDto;
-import com.test.task.service.ContractService;
-import com.test.task.service.UserPermissionService;
+import com.test.task.client.service.ContractService;
+import com.test.task.client.service.UserPermissionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -31,7 +31,7 @@ public class ContractController {
         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 
-    @PatchMapping("edit/{contractId}")
+    @PostMapping("edit/{contractId}")
     public ResponseEntity<?> editContractData(@PathVariable long contractId, @RequestBody ContractDto contractData, Principal auth) {
         if (permissionService.ownsContract(contractId, auth.getName())) {
             return new ResponseEntity<>(ContractDto.convert(contractService.updateContract(contractId, contractData)), new HttpHeaders(), HttpStatus.OK);
@@ -40,8 +40,8 @@ public class ContractController {
     }
 
 
-    @DeleteMapping("remove/{contractId}")
-    public ResponseEntity<?> removeContract(@PathVariable long contractId, Principal auth) {
+    @DeleteMapping("delete/{contractId}")
+    public ResponseEntity<?> deleteContract(@PathVariable long contractId, Principal auth) {
         if (permissionService.ownsContract(contractId, auth.getName())) {
             contractService.deleteContract(contractId);
             return new ResponseEntity<>(HttpStatus.OK);
@@ -49,7 +49,7 @@ public class ContractController {
         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 
-    @PatchMapping("archive/{contractId}")
+    @PostMapping("archive/{contractId}")
     public ResponseEntity<?> archiveContractData(@PathVariable long contractId, Principal auth) {
         if (permissionService.ownsContract(contractId, auth.getName())) {
             return new ResponseEntity<>(ContractDto.convert(contractService.archiveContract(contractId)), new HttpHeaders(), HttpStatus.OK);

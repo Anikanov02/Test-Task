@@ -3,9 +3,9 @@ package com.test.task.controller;
 import com.test.task.domain.dto.LoginDto;
 import com.test.task.domain.dto.UserDto;
 import com.test.task.domain.model.User;
-import com.test.task.service.SecurityService;
-import com.test.task.service.UserPermissionService;
-import com.test.task.service.UserService;
+import com.test.task.client.service.SecurityService;
+import com.test.task.client.service.UserPermissionService;
+import com.test.task.client.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -44,7 +44,7 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 
-    @PatchMapping("edit/{userId}")
+    @PostMapping("edit/{userId}")
     public ResponseEntity<?> editUserData(@RequestParam long userId, @RequestBody UserDto userData, Principal auth) {
         if (permissionService.isAuthenticated(userId, auth.getName())) {
             return new ResponseEntity<>(UserDto.convert(userService.updateUser(userId, userData)), new HttpHeaders(), HttpStatus.OK);

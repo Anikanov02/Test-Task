@@ -1,4 +1,4 @@
-package com.test.task.service;
+package com.test.task.client.service;
 
 import com.test.task.domain.dto.UserDto;
 import com.test.task.domain.model.User;

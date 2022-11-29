@@ -1,4 +1,4 @@
-package com.test.task.service;
+package com.test.task.client.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
