@@ -128,12 +128,28 @@
                 <version>3.1.0</version>
                 <executions>
                     <execution>
+                        <id>copy-gwt-out</id>
                         <phase>compile</phase>
                         <configuration>
                             <target>
-                                <mkdir dir="${basedir}/src/main/resources/static/gwt"/>
-                                <copy todir="${basedir}/src/main/resources/static/gwt">
+                                <mkdir dir="${basedir}/src/main/resources/static/js/gwt"/>
+                                <copy todir="${basedir}/src/main/resources/static/js/gwt">
                                     <fileset dir="${basedir}/target/gwt"/>
+                                </copy>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>copy-frontend-folder</id>
+                        <phase>compile</phase>
+                        <configuration>
+                            <target>
+                                <mkdir dir="${basedir}/src/main/resources/static/js/frontend"/>
+                                <copy todir="${basedir}/src/main/resources/static/js/frontend">
+                                    <fileset dir="${project.build.directory}/${project.build.finalName}"/>
                                 </copy>
                             </target>
                         </configuration>

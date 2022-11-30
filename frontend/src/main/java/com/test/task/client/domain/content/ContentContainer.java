@@ -8,6 +8,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 
 public class ContentContainer {
     private static ContentContainer instance;
+
     private ContentContainer() {
     }
 
@@ -29,10 +30,17 @@ public class ContentContainer {
 
     public static void go(String pageName) {
         switch (pageName) {
-            case "Login" -> go(new Login());
-            case "Home" -> go(new Home());
-            case "Registration" -> go(new Registration());
-            default -> throw new IllegalArgumentException(String.format("Unsupported Page Name: %s", pageName));
+            case "Login":
+                go(new Login());
+                break;
+            case "Home":
+                go(new Home());
+                break;
+            case "Registration":
+                go(new Registration());
+                break;
+            default:
+                throw new IllegalArgumentException("Unsupported Page Name: " + pageName);
         }
     }
 }

@@ -10,8 +10,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.security.Principal;
 
 @RestController
@@ -24,13 +26,23 @@ public class UserController {
     private final SecurityService securityService;
 
     @PostMapping("login")
-    public ResponseEntity<?> login(@RequestBody LoginDto loginDto, Principal auth) {
+    public ResponseEntity<?> login(@RequestBody @Valid LoginDto loginDto, BindingResult bindingResult, Principal auth) {
+        if(bindingResult.hasErrors()) {
+            String message = bindingResult.getAllErrors().stream().reduce("", (subMessage, err) -> subMessage + " " + err.getDefaultMessage(), String::concat);
+            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+        }
+
         securityService.login(loginDto.getLogin(), loginDto.getPassword());
         return new ResponseEntity<>(UserDto.convert(userService.getUserByEmail(loginDto.getLogin())), new HttpHeaders(), HttpStatus.OK);
     }
 
     @PostMapping("new")
-    public ResponseEntity<?> newUser(@RequestBody UserDto userData, Principal auth) {
+    public ResponseEntity<?> newUser(@RequestBody @Valid UserDto userData, BindingResult bindingResult, Principal auth) {
+        if(bindingResult.hasErrors()) {
+            String message = bindingResult.getAllErrors().stream().reduce("", (subMessage, err) -> subMessage + " " + err.getDefaultMessage(), String::concat);
+            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+        }
+
         final User user = userService.createUser(userData);
         securityService.login(user.getEmail(), userData.getPassword());
         return new ResponseEntity<>(UserDto.convert(user), new HttpHeaders(), HttpStatus.OK);
@@ -45,7 +57,12 @@ public class UserController {
     }
 
     @PostMapping("edit/{userId}")
-    public ResponseEntity<?> editUserData(@RequestParam long userId, @RequestBody UserDto userData, Principal auth) {
+    public ResponseEntity<?> editUserData(@RequestParam long userId, @RequestBody @Valid UserDto userData, BindingResult bindingResult, Principal auth) {
+        if(bindingResult.hasErrors()) {
+            String message = bindingResult.getAllErrors().stream().reduce("", (subMessage, err) -> subMessage + " " + err.getDefaultMessage(), String::concat);
+            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+        }
+
         if (permissionService.isAuthenticated(userId, auth.getName())) {
             return new ResponseEntity<>(UserDto.convert(userService.updateUser(userId, userData)), new HttpHeaders(), HttpStatus.OK);
         }

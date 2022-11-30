@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -17,14 +19,21 @@ import java.time.LocalDate;
 public class ContractDto {
     private Long id;
 
+    @NotNull(message = "subscriptionDate must not be null")
     private LocalDate subscriptionDate;
 
+    @NotNull(message = "startDate must not be null")
     private LocalDate startDate;
 
+    @NotNull(message = "expirationDate must not be null")
     private LocalDate expirationDate;
 
+    @Min(value = 0, message = "sumInsured should be > 0")
+    @NotNull(message = "sumInsured must not be null")
     private BigDecimal sumInsured;
 
+    @Min(value = 0, message = "contractSum should be > 0")
+    @NotNull(message = "contractSum must not be null")
     private BigDecimal contractSum;
 
     private Boolean isArchived;
