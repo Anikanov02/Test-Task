@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1669879930117-1
+      author: Sanya (generated)
+      changes:
+        - createSequence:
+            incrementBy: 1
+            sequenceName: hibernate_sequence
+            startValue: 1

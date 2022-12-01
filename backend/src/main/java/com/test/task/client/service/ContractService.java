@@ -11,9 +11,11 @@ import org.springframework.stereotype.Service;
 public class ContractService {
     private final ContractRepository contractRepository;
 
-    public Contract createContract(ContractDto contractData) {
+    private final UserService userService;
+
+    public Contract createContract(ContractDto contractData, String auth) {
         final Contract contract = Contract.builder()
-                .id(contractData.getId())
+                .user(userService.getUserByEmail(auth))
                 .subscriptionDate(contractData.getSubscriptionDate())
                 .startDate(contractData.getStartDate())
                 .expirationDate(contractData.getExpirationDate())
@@ -30,6 +32,12 @@ public class ContractService {
 
     public Contract updateContract(long contractId, ContractDto contractData) {
         final Contract contract = getContractById(contractId);
+        contract.setSubscriptionDate(contractData.getSubscriptionDate());
+        contract.setStartDate(contractData.getStartDate());
+        contract.setExpirationDate(contractData.getExpirationDate());
+        contract.setSumInsured(contractData.getSumInsured());
+        contract.setContractSum(contractData.getContractSum());
+        contract.setIsArchived(contractData.getIsArchived());
         return contractRepository.save(contract);
     }
 
@@ -42,7 +50,7 @@ public class ContractService {
         if (contract.getIsArchived()) {
             throw new RuntimeException(String.format("Contract with id %s is already archived", contractId));
         } else {
-            contract.setIsArchived(false);
+            contract.setIsArchived(true);
             return contractRepository.save(contract);
         }
     }

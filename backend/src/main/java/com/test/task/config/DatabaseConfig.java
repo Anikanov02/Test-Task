@@ -6,8 +6,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @Configuration
-@EnableJpaRepositories("com.cub.project.repository")
-@EntityScan("com.cub.project.domain.models")
+@EnableJpaRepositories("com.test.task.repository")
+@EntityScan("com.test.task.domain.model")
 @EnableJpaAuditing
 public class DatabaseConfig {
 }

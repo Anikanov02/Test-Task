@@ -27,7 +27,7 @@ public class ContractController {
             return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
         }
 
-        return new ResponseEntity<>(ContractDto.convert(contractService.createContract(contractData)), new HttpHeaders(), HttpStatus.OK);
+        return new ResponseEntity<>(ContractDto.convert(contractService.createContract(contractData, auth.getName())), new HttpHeaders(), HttpStatus.OK);
     }
 
     @GetMapping("data/{contractId}")
@@ -50,7 +50,6 @@ public class ContractController {
         }
         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
-
 
     @DeleteMapping("delete/{contractId}")
     public ResponseEntity<?> deleteContract(@PathVariable long contractId, Principal auth) {

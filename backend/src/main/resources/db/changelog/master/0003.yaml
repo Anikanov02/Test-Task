@@ -1,0 +1,38 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1669877183511-1
+      author: Sanya (generated)
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  name: user_id
+                  type: int8
+            tableName: Contract
+  - changeSet:
+      id: 1669877183511-2
+      author: Sanya (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: user_id
+            baseTableName: Contract
+            constraintName: FKsd60fqk87g9s0yjjf0y3phfph
+            deferrable: false
+            initiallyDeferred: false
+            referencedColumnNames: user_id
+            referencedTableName: User
+            validate: true
+  - changeSet:
+      id: 1669877183511-3
+      author: Sanya (generated)
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: Contract
+            constraintName: FKlom6kmu0k1suunih3brbax5n9
+  - changeSet:
+      id: 1669877183511-4
+      author: Sanya (generated)
+      changes:
+        - dropColumn:
+            columnName: users_contracts
+            tableName: Contract

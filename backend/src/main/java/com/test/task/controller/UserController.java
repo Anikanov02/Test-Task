@@ -8,6 +8,7 @@ import com.test.task.client.service.SecurityService;
 import com.test.task.client.service.UserPermissionService;
 import com.test.task.client.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v1/user")
 @RequiredArgsConstructor
+@Slf4j
 public class UserController {
     private final UserService userService;
     private final UserPermissionService permissionService;
@@ -35,6 +37,7 @@ public class UserController {
         }
 
         securityService.login(loginDto.getLogin(), loginDto.getPassword());
+        log.debug("logged new user: " + loginDto.getLogin());
         return new ResponseEntity<>(UserDto.convert(userService.getUserByEmail(loginDto.getLogin())), new HttpHeaders(), HttpStatus.OK);
     }
 
@@ -46,12 +49,13 @@ public class UserController {
         }
 
         final User user = userService.createUser(userData);
+        log.info("created new user, id={}, login={}", user.getId(), user.getEmail());
         securityService.login(user.getEmail(), userData.getPassword());
         return new ResponseEntity<>(UserDto.convert(user), new HttpHeaders(), HttpStatus.OK);
     }
 
     @GetMapping("data/{userId}")
-    public ResponseEntity<?> getUserData(@RequestParam long userId, Principal auth) {
+    public ResponseEntity<?> getUserData(@PathVariable long userId, Principal auth) {
         if (permissionService.isAuthenticated(userId, auth.getName())) {
             return new ResponseEntity<>(UserDto.convert(userService.getUserById(userId)), new HttpHeaders(), HttpStatus.OK);
         }
@@ -59,7 +63,7 @@ public class UserController {
     }
 
     @GetMapping("{userId}/contracts")
-    public ResponseEntity<?> getContracts(@RequestParam long userId, Principal auth) {
+    public ResponseEntity<?> getContracts(@PathVariable long userId, Principal auth) {
         if (permissionService.isAuthenticated(userId, auth.getName())) {
             return new ResponseEntity<>(userService.getUserById(userId).getContracts().stream().map(ContractDto::convert), new HttpHeaders(), HttpStatus.OK);
         }
@@ -67,7 +71,7 @@ public class UserController {
     }
 
     @PostMapping("edit/{userId}")
-    public ResponseEntity<?> editUserData(@RequestParam long userId, @RequestBody @Valid UserDto userData, BindingResult bindingResult, Principal auth) {
+    public ResponseEntity<?> editUserData(@PathVariable long userId, @RequestBody @Valid UserDto userData, BindingResult bindingResult, Principal auth) {
         if(bindingResult.hasErrors()) {
             String message = bindingResult.getAllErrors().stream().reduce("", (subMessage, err) -> subMessage + " " + err.getDefaultMessage(), String::concat);
             return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
@@ -80,9 +84,10 @@ public class UserController {
     }
 
     @DeleteMapping("delete/{userId}")
-    public ResponseEntity<?> deleteUser(@RequestParam long userId, Principal auth) {
+    public ResponseEntity<?> deleteUser(@PathVariable long userId, Principal auth) {
         if (permissionService.isAuthenticated(userId, auth.getName())) {
             userService.deleteUser(userId);
+            log.info("deleted user, id={}", userId);
             return new ResponseEntity<>(HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.FORBIDDEN);

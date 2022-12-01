@@ -19,7 +19,8 @@ public class UserService {
                 .firstName(userData.getFirstName())
                 .lastName(userData.getLastName())
                 .fathersName(userData.getFathersName())
-                .password(userData.getPassword())
+                .email(userData.getEmail())
+                .password(passwordEncoder.encode(userData.getPassword()))
                 .dateOfBirth(userData.getDateOfBirth())
                 .phoneNumber(userData.getPhoneNumber())
                 .build();
@@ -30,7 +31,7 @@ public class UserService {
     }
 
     public User getUserByPhoneNumber(String phone) {
-        return userRepository.findByPhone(phone).orElseThrow(() -> new RuntimeException(String.format("No user found with phone %s", phone)));
+        return userRepository.findByPhoneNumber(phone).orElseThrow(() -> new RuntimeException(String.format("No user found with phone %s", phone)));
     }
 
     public User getUserByEmail(String email) {

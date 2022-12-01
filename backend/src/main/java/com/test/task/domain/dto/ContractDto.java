@@ -36,7 +36,7 @@ public class ContractDto {
     @NotNull(message = "contractSum must not be null")
     private BigDecimal contractSum;
 
-    private Boolean isArchived;
+    private Boolean isArchived = false;
 
     public static ContractDto convert(Contract contract) {
         return ContractDto.builder()
