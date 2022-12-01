@@ -1,14 +1,10 @@
-package com.test.task.client.domain.content;
+package com.test.task.client.handlers.content;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.*;
-import com.test.task.client.domain.GlobalSessionInfo;
+import com.test.task.Constants;
 import com.test.task.client.domain.dto.UserDto;
-import com.test.task.client.service.UserRequestService;
-import org.fusesource.restygwt.client.Method;
-import org.fusesource.restygwt.client.MethodCallback;
 
-public class Registration extends Composite {
+public class UserDataComposite extends Composite {
     private Label infoLabel;
 
     private TextBox firstNameBox;
@@ -27,16 +23,8 @@ public class Registration extends Composite {
 
     private TextBox phoneNumberBox;
 
-    private Button submit;
-
-    private Button login;
-
-    private UserRequestService userService;
-
-    public Registration() {
-        userService = GWT.create(UserRequestService.class);
-
-        VerticalPanel panel = new VerticalPanel();
+    public UserDataComposite() {
+        final VerticalPanel panel = new VerticalPanel();
         infoLabel = new Label();
         firstNameBox = new TextBox();
         lastNameBox = new TextBox();
@@ -46,9 +34,6 @@ public class Registration extends Composite {
         confirmPasswordTextBox = new PasswordTextBox();
         dateOfBirthBox = new TextBox();
         phoneNumberBox = new TextBox();
-        submit = new Button("Submit");
-        login = new Button("Login");
-        refresh();
         panel.add(infoLabel);
         panel.add(new Label("First name:"));
         panel.add(firstNameBox);
@@ -66,39 +51,20 @@ public class Registration extends Composite {
         panel.add(dateOfBirthBox);
         panel.add(new Label("Phone:"));
         panel.add(phoneNumberBox);
-        panel.add(submit);
-        panel.add(login);
         initWidget(panel);
-
-        submit.addClickHandler(event -> {
-            refresh();
-            if (validated()) {
-                UserDto userDto = new UserDto(firstNameBox.getText().trim(),
-                        lastNameBox.getText().trim(),
-                        fathersNameBox.getText().trim(),
-                        loginBox.getText().trim(),
-                        passwordTextBox.getText().trim(),
-                        dateOfBirthBox.getText(),
-                        phoneNumberBox.getText().trim());
-                userService.newUser(userDto, new MethodCallback<UserDto>() {
-                    @Override
-                    public void onFailure(Method method, Throwable throwable) {
-                        message("creating user failed with error: " + throwable.getMessage());
-                    }
-
-                    @Override
-                    public void onSuccess(Method method, UserDto userDto) {
-                        GlobalSessionInfo.userDto = userDto;
-                        ContentContainer.go(new Home());
-                    }
-                });
-            }
-        });
-
-        login.addClickHandler(event -> ContentContainer.go(new Login()));
     }
 
-    private boolean validated() {
+    public void loadUserData(UserDto data) {
+        firstNameBox.setText(data.getFirstName());
+        lastNameBox.setText(data.getLastName());
+        fathersNameBox.setText(data.getFathersName());
+        loginBox.setText(data.getEmail());
+        passwordTextBox.setText(data.getPassword());
+        dateOfBirthBox.setText(data.getDateOfBirth());
+        phoneNumberBox.setText(data.getPhoneNumber());
+    }
+
+    public boolean validated() {
         if (firstNameBox.getText().trim().equals("")) {
             message("You should specify your first name");
             return false;
@@ -134,12 +100,7 @@ public class Registration extends Composite {
             return false;
         }
 
-        if (dateOfBirthBox.getText().equals("")) {
-            message("You should specify your date of birth");
-            return false;
-        }
-
-        if (!dateOfBirthBox.getText().matches("\\d{4}-\\d{2}-\\d{2}")) {
+        if (!dateOfBirthBox.getText().matches(Constants.DATE_REGEX)) {
             message("Date of birth should be of pattern yyyy-MM-dd");
             return false;
         }
@@ -152,7 +113,7 @@ public class Registration extends Composite {
         return true;
     }
 
-    private void refresh() {
+    public void refresh() {
         infoLabel.setText("");
         infoLabel.setVisible(false);
     }
@@ -163,8 +124,75 @@ public class Registration extends Composite {
         infoLabel.setVisible(true);
     }
 
-    @Override
-    public String getTitle() {
-        return "Registration Page";
+    public Label getInfoLabel() {
+        return infoLabel;
+    }
+
+    public void setInfoLabel(Label infoLabel) {
+        this.infoLabel = infoLabel;
+    }
+
+    public TextBox getFirstNameBox() {
+        return firstNameBox;
+    }
+
+    public void setFirstNameBox(TextBox firstNameBox) {
+        this.firstNameBox = firstNameBox;
+    }
+
+    public TextBox getLastNameBox() {
+        return lastNameBox;
+    }
+
+    public void setLastNameBox(TextBox lastNameBox) {
+        this.lastNameBox = lastNameBox;
+    }
+
+    public TextBox getFathersNameBox() {
+        return fathersNameBox;
+    }
+
+    public void setFathersNameBox(TextBox fathersNameBox) {
+        this.fathersNameBox = fathersNameBox;
+    }
+
+    public TextBox getLoginBox() {
+        return loginBox;
+    }
+
+    public void setLoginBox(TextBox loginBox) {
+        this.loginBox = loginBox;
+    }
+
+    public PasswordTextBox getPasswordTextBox() {
+        return passwordTextBox;
+    }
+
+    public void setPasswordTextBox(PasswordTextBox passwordTextBox) {
+        this.passwordTextBox = passwordTextBox;
+    }
+
+    public PasswordTextBox getConfirmPasswordTextBox() {
+        return confirmPasswordTextBox;
+    }
+
+    public void setConfirmPasswordTextBox(PasswordTextBox confirmPasswordTextBox) {
+        this.confirmPasswordTextBox = confirmPasswordTextBox;
+    }
+
+    public TextBox getDateOfBirthBox() {
+        return dateOfBirthBox;
+    }
+
+    public void setDateOfBirthBox(TextBox dateOfBirthBox) {
+        this.dateOfBirthBox = dateOfBirthBox;
+    }
+
+    public TextBox getPhoneNumberBox() {
+        return phoneNumberBox;
+    }
+
+    public void setPhoneNumberBox(TextBox phoneNumberBox) {
+        this.phoneNumberBox = phoneNumberBox;
     }
 }

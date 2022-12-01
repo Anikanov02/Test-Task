@@ -1,5 +1,6 @@
 package com.test.task.controller;
 
+import com.test.task.domain.dto.ContractDto;
 import com.test.task.domain.dto.LoginDto;
 import com.test.task.domain.dto.UserDto;
 import com.test.task.domain.model.User;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/user")
@@ -52,6 +54,14 @@ public class UserController {
     public ResponseEntity<?> getUserData(@RequestParam long userId, Principal auth) {
         if (permissionService.isAuthenticated(userId, auth.getName())) {
             return new ResponseEntity<>(UserDto.convert(userService.getUserById(userId)), new HttpHeaders(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+    }
+
+    @GetMapping("{userId}/contracts")
+    public ResponseEntity<?> getContracts(@RequestParam long userId, Principal auth) {
+        if (permissionService.isAuthenticated(userId, auth.getName())) {
+            return new ResponseEntity<>(userService.getUserById(userId).getContracts().stream().map(ContractDto::convert), new HttpHeaders(), HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }

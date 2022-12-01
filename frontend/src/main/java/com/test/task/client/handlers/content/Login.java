@@ -1,15 +1,15 @@
-package com.test.task.client.domain.content;
+package com.test.task.client.handlers.content;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.*;
-import com.test.task.client.domain.GlobalSessionInfo;
+import com.test.task.client.GlobalSessionInfo;
 import com.test.task.client.domain.dto.LoginDto;
 import com.test.task.client.domain.dto.UserDto;
 import com.test.task.client.service.UserRequestService;
 import org.fusesource.restygwt.client.Method;
 import org.fusesource.restygwt.client.MethodCallback;
 
-public class Login extends Composite {
+public class Login extends Page {
     private Label infoLabel;
     private TextBox loginBox;
     private PasswordTextBox passwordTextBox;
@@ -20,7 +20,7 @@ public class Login extends Composite {
     public Login() {
         userService = GWT.create(UserRequestService.class);
 
-        VerticalPanel panel = new VerticalPanel();
+        final VerticalPanel panel = new VerticalPanel();
         infoLabel = new Label();
         loginBox = new TextBox();
         passwordTextBox = new PasswordTextBox();
@@ -49,13 +49,13 @@ public class Login extends Composite {
                     @Override
                     public void onSuccess(Method method, UserDto userDto) {
                         GlobalSessionInfo.userDto = userDto;
-                        ContentContainer.go(new Home());
+                        PageLoader.go(new Home());
                     }
                 });
             }
         });
 
-        register.addClickHandler(event -> ContentContainer.go(new Registration()));
+        register.addClickHandler(event -> PageLoader.go(new Registration()));
     }
 
     private boolean validated() {

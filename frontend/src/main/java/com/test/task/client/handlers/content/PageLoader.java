@@ -1,22 +1,21 @@
-package com.test.task.client.domain.content;
+package com.test.task.client.handlers.content;
 
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.RootPanel;
 
-public class ContentContainer {
-    private static ContentContainer instance;
+public class PageLoader {
+    private static PageLoader instance;
 
-    private ContentContainer() {
+    private PageLoader() {
     }
 
-    public static ContentContainer getInstance() {
-        return instance == null ? new ContentContainer() : instance;
+    public static PageLoader getInstance() {
+        return instance == null ? new PageLoader() : instance;
     }
 
-    public static void go(Composite c) {
+    public static void go(Page c) {
         RootPanel.get("application").clear();
         RootPanel.get("application").getElement().getStyle().setPosition(Style.Position.RELATIVE);
 
