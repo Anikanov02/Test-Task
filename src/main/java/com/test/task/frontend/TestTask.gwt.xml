@@ -1,0 +1,5 @@
+<module rename-to="TestTask">
+    <inherits name="org.fusesource.restygwt.RestyGWT"/>
+    <entry-point class="com.test.task.frontend.client.handlers.TestTaskEntryPoint" />
+    <source path="client"/>
+</module>
