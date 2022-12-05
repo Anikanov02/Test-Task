@@ -2,14 +2,21 @@ package com.test.task.backend.service;
 
 import com.test.task.backend.domain.dto.ContractDto;
 import com.test.task.backend.domain.model.Contract;
+import com.test.task.backend.domain.model.User;
 import com.test.task.backend.repository.ContractRepository;
+import com.test.task.backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ContractService {
     private final ContractRepository contractRepository;
+
+    private final UserRepository userRepository;
 
     private final UserService userService;
 
@@ -41,8 +48,10 @@ public class ContractService {
         return contractRepository.save(contract);
     }
 
-    public void deleteContract(long contractId) {
-        contractRepository.deleteById(contractId);
+    public void deleteContract(long contractId, String auth) {
+        final User user = userService.getUserByEmail(auth);
+        user.getContracts().removeIf(contract -> contract.getId().equals(contractId));
+        userRepository.save(user);
     }
 
     public Contract archiveContract(long contractId) {

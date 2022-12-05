@@ -60,7 +60,7 @@ public class ContractController {
     @DeleteMapping("delete/{contractId}")
     public ResponseEntity<?> deleteContract(@PathVariable long contractId, Principal auth) {
         if (permissionService.ownsContract(contractId, auth.getName())) {
-            contractService.deleteContract(contractId);
+            contractService.deleteContract(contractId, auth.getName());
             log.info("deleted contract, id: {}", contractId);
             return new ResponseEntity<>(HttpStatus.OK);
         }

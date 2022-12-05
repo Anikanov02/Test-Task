@@ -5,49 +5,42 @@ import com.test.task.frontend.Constants;
 import com.test.task.frontend.client.domain.dto.ContractDto;
 
 public class ContractDataComposite extends Composite {
-    private Label infoLabel;
-    private Label idLabel;
-
-    private TextBox subscriptionDate;
-
-    private TextBox startDate;
-
-    private TextBox expirationDate;
-
-    private TextBox sumInsured;
-
-    private TextBox contractSum;
-
-    private ListBox isArchived;
-
-    public ContractDto getModel() {
-        return model;
-    }
-
-    public void setModel(ContractDto model) {
-        this.model = model;
-    }
-
+    private final Label infoLabel;
+    private final Label idLabel;
+    private final TextBox subscriptionDate;
+    private final TextBox startDate;
+    private final TextBox expirationDate;
+    private final TextBox sumInsured;
+    private final TextBox contractSum;
+    private final ListBox isArchived;
     private ContractDto model;
 
     public ContractDataComposite() {
         final VerticalPanel panel = new VerticalPanel();
         infoLabel = new Label();
-        idLabel = new Label();
+        idLabel = new Label("id: ");
         subscriptionDate = new TextBox();
         startDate = new TextBox();
         expirationDate = new TextBox();
         sumInsured = new TextBox();
         contractSum = new TextBox();
         isArchived = new ListBox();
+        isArchived.addItem("false");
+        isArchived.addItem("true");
         isArchived.setMultipleSelect(false);
         panel.add(infoLabel);
         panel.add(idLabel);
+        panel.add(new Label("subscriptionDate: "));
         panel.add(subscriptionDate);
+        panel.add(new Label("startDate: "));
         panel.add(startDate);
+        panel.add(new Label("expirationDate: "));
         panel.add(expirationDate);
+        panel.add(new Label("sumInsured: "));
         panel.add(sumInsured);
+        panel.add(new Label("contractSum: "));
         panel.add(contractSum);
+        panel.add(new Label("isArchived: "));
         panel.add(isArchived);
         refresh();
         initWidget(panel);
@@ -55,13 +48,13 @@ public class ContractDataComposite extends Composite {
 
     public void loadData(ContractDto data) {
         model = data;
-        idLabel.setText(data.getId().toString());
+        idLabel.setText("id: " + data.getId().toString());
         subscriptionDate.setText(data.getSubscriptionDate());
         startDate.setText(data.getStartDate());
         expirationDate.setText(data.getExpirationDate());
         sumInsured.setText(data.getSumInsured().toString());
         contractSum.setText(data.getContractSum().toString());
-        isArchived.setItemSelected(data.getArchived() ? 0 : 1, true);
+        isArchived.setItemSelected(data.getArchived() ? 1 : 0, true);
     }
 
     public boolean validated() {
@@ -95,10 +88,7 @@ public class ContractDataComposite extends Composite {
                 message("Select whether contract is archived or not");
                 return false;
             }
-        } else {
-            return false;
         }
-
         return true;
     }
 
@@ -113,67 +103,39 @@ public class ContractDataComposite extends Composite {
         infoLabel.setVisible(true);
     }
 
-    public Label getInfoLabel() {
-        return infoLabel;
+    public ContractDto getModel() {
+        return model;
     }
 
-    public void setInfoLabel(Label infoLabel) {
-        this.infoLabel = infoLabel;
+    public Label getInfoLabel() {
+        return infoLabel;
     }
 
     public Label getIdLabel() {
         return idLabel;
     }
 
-    public void setIdLabel(Label idLabel) {
-        this.idLabel = idLabel;
-    }
-
     public TextBox getSubscriptionDate() {
         return subscriptionDate;
-    }
-
-    public void setSubscriptionDate(TextBox subscriptionDate) {
-        this.subscriptionDate = subscriptionDate;
     }
 
     public TextBox getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(TextBox startDate) {
-        this.startDate = startDate;
-    }
-
     public TextBox getExpirationDate() {
         return expirationDate;
-    }
-
-    public void setExpirationDate(TextBox expirationDate) {
-        this.expirationDate = expirationDate;
     }
 
     public TextBox getSumInsured() {
         return sumInsured;
     }
 
-    public void setSumInsured(TextBox sumInsured) {
-        this.sumInsured = sumInsured;
-    }
-
     public TextBox getContractSum() {
         return contractSum;
     }
 
-    public void setContractSum(TextBox contractSum) {
-        this.contractSum = contractSum;
-    }
-
     public ListBox getIsArchived() {
         return isArchived;
-    }
-
-    public void setIsArchived(ListBox isArchived) {
-        this.isArchived = isArchived;
     }
 }

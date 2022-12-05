@@ -7,49 +7,73 @@ import com.test.task.frontend.client.domain.dto.UserDto;
 public class UserDataComposite extends Composite {
     private Label infoLabel;
 
+    private Label firstNameLabel;
+
     private TextBox firstNameBox;
+
+    private Label lastNameLabel;
 
     private TextBox lastNameBox;
 
+    private Label fathersNameLabel;
+
     private TextBox fathersNameBox;
+
+    private Label loginLabel;
 
     private TextBox loginBox;
 
+    private Label passwordLabel;
+
     private PasswordTextBox passwordTextBox;
+
+    private Label confirmPasswordLabel;
 
     private PasswordTextBox confirmPasswordTextBox;
 
+    private Label dateOfBirthLabel;
+
     private TextBox dateOfBirthBox;
+
+    private Label phoneNumberLabel;
 
     private TextBox phoneNumberBox;
 
     public UserDataComposite() {
         final VerticalPanel panel = new VerticalPanel();
         infoLabel = new Label();
+        firstNameLabel = new Label("First name:");
         firstNameBox = new TextBox();
+        lastNameLabel = new Label("Last name:");
         lastNameBox = new TextBox();
+        fathersNameLabel = new Label("Fathers name");
         fathersNameBox = new TextBox();
+        loginLabel = new Label("Login:");
         loginBox = new TextBox();
+        passwordLabel = new Label("Password:");
         passwordTextBox = new PasswordTextBox();
+        confirmPasswordLabel = new Label("Confirm password:");
         confirmPasswordTextBox = new PasswordTextBox();
+        dateOfBirthLabel = new Label("Date of birth(yyyy-MM-dd):");
         dateOfBirthBox = new TextBox();
+        phoneNumberLabel = new Label("Phone:");
         phoneNumberBox = new TextBox();
         panel.add(infoLabel);
-        panel.add(new Label("First name:"));
+        panel.add(firstNameLabel);
         panel.add(firstNameBox);
-        panel.add(new Label("Last name:"));
+        panel.add(lastNameLabel);
         panel.add(lastNameBox);
-        panel.add(new Label("Fathers name"));
+        panel.add(fathersNameLabel);
         panel.add(fathersNameBox);
-        panel.add(new Label("Login:"));
+        panel.add(loginLabel);
         panel.add(loginBox);
-        panel.add(new Label("Password:"));
+        panel.add(passwordLabel);
         panel.add(passwordTextBox);
-        panel.add(new Label("Confirm password:"));
+        panel.add(confirmPasswordLabel);
         panel.add(confirmPasswordTextBox);
-        panel.add(new Label("Date of birth(yyyy-MM-dd):"));
+        panel.add(dateOfBirthLabel);
         panel.add(dateOfBirthBox);
-        panel.add(new Label("Phone:"));
+        panel.add(phoneNumberLabel);
         panel.add(phoneNumberBox);
         initWidget(panel);
     }
@@ -194,5 +218,37 @@ public class UserDataComposite extends Composite {
 
     public void setPhoneNumberBox(TextBox phoneNumberBox) {
         this.phoneNumberBox = phoneNumberBox;
+    }
+
+    public Label getFirstNameLabel() {
+        return firstNameLabel;
+    }
+
+    public Label getLastNameLabel() {
+        return lastNameLabel;
+    }
+
+    public Label getFathersNameLabel() {
+        return fathersNameLabel;
+    }
+
+    public Label getLoginLabel() {
+        return loginLabel;
+    }
+
+    public Label getPasswordLabel() {
+        return passwordLabel;
+    }
+
+    public Label getConfirmPasswordLabel() {
+        return confirmPasswordLabel;
+    }
+
+    public Label getDateOfBirthLabel() {
+        return dateOfBirthLabel;
+    }
+
+    public Label getPhoneNumberLabel() {
+        return phoneNumberLabel;
     }
 }

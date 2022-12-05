@@ -15,7 +15,7 @@ public class PageLoader {
         // find center
         int left = Window.getClientWidth() / 2 - c.getOffsetWidth() / 2;
         int top = Window.getClientHeight() / 2 - c.getOffsetHeight() / 2;
-        RootPanel.get("application").setWidgetPosition(c, left, top);
+        setPagePosition(c, left, top);
         History.newItem(c.getTitle());
     }
 
@@ -33,5 +33,9 @@ public class PageLoader {
             default:
                 throw new IllegalArgumentException("Unsupported Page Name: " + pageName);
         }
+    }
+
+    public static void setPagePosition(Page page, int left, int top) {
+        RootPanel.get("application").setWidgetPosition(page, left, top);
     }
 }

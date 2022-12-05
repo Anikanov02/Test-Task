@@ -3,6 +3,7 @@ package com.test.task.backend.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -24,13 +25,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/home", "/home/**","/api/v1/user/login", "/api/v1/user/new").permitAll()
-                .and()
-                .authorizeRequests()
+                .antMatchers("/**", "/api/v1/user/login", "/api/v1/user/new").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .logout()
-                .permitAll()
+                .logout().permitAll()
                 .and().formLogin().disable()
                 .csrf().disable()
                 .httpBasic();

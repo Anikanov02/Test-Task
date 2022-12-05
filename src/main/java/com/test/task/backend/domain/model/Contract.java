@@ -10,7 +10,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-@Entity(name = "contracts")
+@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -43,7 +43,7 @@ public class Contract {
     @Column(name = "is_archived")
     private Boolean isArchived;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User user;
 }
