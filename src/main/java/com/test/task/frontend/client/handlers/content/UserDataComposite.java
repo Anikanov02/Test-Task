@@ -11,36 +11,64 @@ public class UserDataComposite extends Composite {
 
     private TextBox firstNameBox;
 
+
+    private boolean firstNameEnabled;
+
     private Label lastNameLabel;
 
+
     private TextBox lastNameBox;
+
+    private boolean lastNameEnabled;
 
     private Label fathersNameLabel;
 
     private TextBox fathersNameBox;
 
+    private boolean fathersNameEnabled;
+
     private Label loginLabel;
 
+
     private TextBox loginBox;
+
+    private boolean loginEnabled;
 
     private Label passwordLabel;
 
     private PasswordTextBox passwordTextBox;
 
+    private boolean passwordEnabled;
+
     private Label confirmPasswordLabel;
 
     private PasswordTextBox confirmPasswordTextBox;
+
+    private boolean confirmPasswordEnabled;
 
     private Label dateOfBirthLabel;
 
     private TextBox dateOfBirthBox;
 
+    private boolean dateOfBirthEnabled;
+
     private Label phoneNumberLabel;
 
     private TextBox phoneNumberBox;
 
+    private boolean phoneNumberEnabled;
+
     public UserDataComposite() {
         final VerticalPanel panel = new VerticalPanel();
+        firstNameEnabled = true;
+        lastNameEnabled = true;
+        fathersNameEnabled = true;
+        loginEnabled = true;
+        passwordEnabled = true;
+        confirmPasswordEnabled = true;
+        dateOfBirthEnabled = true;
+        phoneNumberEnabled = true;
+
         infoLabel = new Label();
         firstNameLabel = new Label("First name:");
         firstNameBox = new TextBox();
@@ -89,52 +117,63 @@ public class UserDataComposite extends Composite {
     }
 
     public boolean validated() {
-        if (firstNameBox.getText().trim().equals("")) {
+        if (firstNameEnabled && firstNameBox.getText().trim().equals("")) {
             message("You should specify your first name");
             return false;
         }
 
-        if (lastNameBox.getText().trim().equals("")) {
+        if (lastNameEnabled && lastNameBox.getText().trim().equals("")) {
             message("You should specify your last name");
             return false;
         }
 
-        if (fathersNameBox.getText().trim().equals("")) {
+        if (fathersNameEnabled && fathersNameBox.getText().trim().equals("")) {
             message("You should specify your fathers name");
             return false;
         }
 
-        if (loginBox.getText().trim().equals("")) {
+        if (loginEnabled && loginBox.getText().trim().equals("")) {
             message("Login field must not be empty");
             return false;
         }
 
-        if (passwordTextBox.getText().trim().equals("")) {
+        if (passwordEnabled && passwordTextBox.getText().trim().equals("")) {
             message("Password field must not be empty");
             return false;
         }
 
-        if (confirmPasswordTextBox.getText().trim().equals("")) {
+        if (confirmPasswordEnabled && confirmPasswordTextBox.getText().trim().equals("")) {
             message("You should confirm password");
             return false;
         }
 
-        if (!passwordTextBox.getText().equals(confirmPasswordTextBox.getText())) {
+        if (confirmPasswordEnabled && !passwordTextBox.getText().equals(confirmPasswordTextBox.getText())) {
             message("Password confirmation failed, retry");
             return false;
         }
 
-        if (!dateOfBirthBox.getText().matches(Constants.DATE_REGEX)) {
+        if (dateOfBirthEnabled && !dateOfBirthBox.getText().matches(Constants.DATE_REGEX)) {
             message("Date of birth should be of pattern yyyy-MM-dd");
             return false;
         }
 
-        if (phoneNumberBox.getText().trim().equals("")) {
+        if (phoneNumberEnabled && phoneNumberBox.getText().trim().equals("")) {
             message("Phone field must not be empty");
             return false;
         }
 
         return true;
+    }
+
+    public UserDto getUserData() {
+        String firstName = firstNameEnabled ? firstNameBox.getText().trim() : "";
+        String lastName = lastNameEnabled ? lastNameBox.getText().trim() : "";
+        String fathersName = fathersNameEnabled ? fathersNameBox.getText().trim() : "";
+        String email = loginEnabled ? loginBox.getText().trim() : "";
+        String password = passwordEnabled ? passwordTextBox.getText().trim() : "";
+        String dateOfBirth = dateOfBirthEnabled ? dateOfBirthBox.getText().trim() : "";
+        String phoneNumber = phoneNumberEnabled ? phoneNumberBox.getText().trim() : "";
+        return new UserDto(firstName, lastName, fathersName, email, password, dateOfBirth, phoneNumber);
     }
 
     public void refresh() {

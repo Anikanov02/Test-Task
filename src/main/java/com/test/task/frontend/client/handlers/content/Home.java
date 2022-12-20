@@ -1,26 +1,25 @@
 package com.test.task.frontend.client.handlers.content;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.*;
-import com.test.task.frontend.client.service.UserRequestService;
 
 import java.util.Iterator;
 
 public class Home extends Page {
-
-    private final VerticalPanel accountContentPanel;
-    private final VerticalPanel contractsContentPanel;
-    private final UserRequestService userService;
+    interface HomeUiBinder extends UiBinder<HTMLPanel, Home> {}
+    private static HomeUiBinder uiBinder = GWT.create(HomeUiBinder.class);
+    @UiField
+    TabPanel panel;
 
     public Home() {
-        userService = GWT.create(UserRequestService.class);
+        initWidget(uiBinder.createAndBindUi(this));
 
-        TabPanel panel = new TabPanel();
-        accountContentPanel = new VerticalPanel();
-        contractsContentPanel = new VerticalPanel();
+        final VerticalPanel accountContentPanel = new VerticalPanel();
+        final VerticalPanel contractsContentPanel = new VerticalPanel();
         panel.add(accountContentPanel, "Account");
         panel.add(contractsContentPanel, "Contracts");
-        initWidget(panel);
 
         panel.addSelectionHandler(event -> {
             if (panel.getTabBar().getSelectedTab() == 0) {
@@ -28,7 +27,6 @@ public class Home extends Page {
             } else if (panel.getTabBar().getSelectedTab() == 1) {
                 setupContractsTab(contractsContentPanel);
             }
-            centerPage();
         });
     }
 

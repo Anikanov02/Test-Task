@@ -1,7 +1,10 @@
 package com.test.task.frontend.client.handlers.content;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.test.task.frontend.client.GlobalSessionInfo;
 import com.test.task.frontend.client.domain.dto.UserDto;
@@ -10,6 +13,11 @@ import org.fusesource.restygwt.client.Method;
 import org.fusesource.restygwt.client.MethodCallback;
 
 public class Registration extends Page {
+    interface RegistrationUiBinder extends UiBinder<HTMLPanel, Registration> {}
+    private static Registration.RegistrationUiBinder uiBinder = GWT.create(Registration.RegistrationUiBinder.class);
+
+    @UiField
+    VerticalPanel panel;
     private UserDataComposite userData;
 
     private Button submit;
@@ -18,10 +26,11 @@ public class Registration extends Page {
 
     private UserRequestService userService;
 
+
     public Registration() {
+        initWidget(uiBinder.createAndBindUi(this));
         userService = GWT.create(UserRequestService.class);
 
-        final VerticalPanel panel = new VerticalPanel();
         userData = new UserDataComposite();
         submit = new Button("Submit");
         login = new Button("Login");
@@ -29,7 +38,6 @@ public class Registration extends Page {
         panel.add(userData);
         panel.add(submit);
         panel.add(login);
-        initWidget(panel);
 
         submit.addClickHandler(event -> {
             userData.refresh();

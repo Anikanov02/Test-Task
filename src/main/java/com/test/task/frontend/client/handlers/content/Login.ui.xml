@@ -1,0 +1,71 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+    <ui:style>
+        body, html {
+        font-family: 'Roboto', sans-serif;
+        font-size: 16px;
+        line-height: 24px;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        background-color: #E9EAED;
+        }
+
+        ul {
+        padding: 0;
+        list-style-type: none;
+        }
+
+        .center {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        top: 50%;
+        margin: auto;
+        width: 50%;
+        height: 100%;
+        width: 100%;
+        }
+
+        .login {
+        background-color: #FFFFFF;
+        width: 25%;
+        padding: 20px;
+        box-shadow: 0 0 10px 1px #C9C9C9;
+        border-radius: .25rem
+        }
+
+        .header {
+        text-align: center;
+        margin: 0;
+        padding-bottom: 20px;
+        }
+
+        .text {
+        width: 100%;
+        border: 1px solid #CCC;
+        padding: .375rem .75rem;
+        border-radius: .25rem;
+        border-right: 0;
+        }
+
+        .footer {
+        color: gray;
+        text-align: center;
+        cursor: pointer;
+        margin-top: 10px;
+        text-decoration: none;
+        font-size: 12px;
+        }
+    </ui:style>
+
+    <g:HTMLPanel addStyleNames="{style.center}">
+        <div class="{style.login}">
+            <h1 class="{style.header}">Login</h1>
+
+            <g:VerticalPanel ui:field="panel" addStyleNames="{style.text}"/>
+        </div>
+        <a class="{style.footer}" href="https://github.com/Anikanov02/Test-Task" target="_blank">Project github</a>
+    </g:HTMLPanel>
+</ui:UiBinder>
