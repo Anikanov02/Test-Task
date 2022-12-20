@@ -1,0 +1,95 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1669950572613-1
+      author: Sanya (generated)
+      changes:
+        - createSequence:
+            incrementBy: 1
+            sequenceName: hibernate_sequence
+            startValue: 1
+  - changeSet:
+      id: 1669950572613-2
+      author: Sanya (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: contractsPK
+                  name: contract_id
+                  type: BIGINT
+              - column:
+                  name: contract_sum
+                  type: numeric(19, 2)
+              - column:
+                  name: expiration_date
+                  type: VARCHAR(255)
+              - column:
+                  name: is_archived
+                  type: BOOLEAN
+              - column:
+                  name: start_date
+                  type: VARCHAR(255)
+              - column:
+                  name: subscription_date
+                  type: VARCHAR(255)
+              - column:
+                  name: sum_insured
+                  type: numeric(19, 2)
+              - column:
+                  name: user_id
+                  type: BIGINT
+            tableName: contracts
+  - changeSet:
+      id: 1669950572613-3
+      author: Sanya (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: usersPK
+                  name: user_id
+                  type: BIGINT
+              - column:
+                  name: date_of_birth
+                  type: VARCHAR(255)
+              - column:
+                  name: email
+                  type: VARCHAR(255)
+              - column:
+                  name: fathers_name
+                  type: VARCHAR(255)
+              - column:
+                  name: first_name
+                  type: VARCHAR(255)
+              - column:
+                  name: last_name
+                  type: VARCHAR(255)
+              - column:
+                  name: password
+                  type: VARCHAR(255)
+              - column:
+                  name: phone_number
+                  type: VARCHAR(255)
+            tableName: users
+  - changeSet:
+      id: 1669950572613-4
+      author: Sanya (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: user_id
+            baseTableName: contracts
+            constraintName: FKq3v8dxlubujug7dxvpauig94n
+            deferrable: false
+            initiallyDeferred: false
+            referencedColumnNames: user_id
+            referencedTableName: users
+            validate: true
+
